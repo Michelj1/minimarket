@@ -17,7 +17,7 @@ public class Validaciones {
 	public static final String RUC = "\\d{11}";
 	public static final String ISO = "[A-Z]{2}";
 	public static final String SERIE = "[0-9]{1}";
-	public static final String PRECIO = "\\d+.\\d";
+	public static final String PRECIO = "\\d+.\\d+";
 	public static final String TEXTO_NUMERO = "[0-9a-zA-ZáéíóúñüÁÉÍÓÚÑÜ\\s]{2,40}";
 	public static final String NUMERO = "[0-9]{1,1000}";
 	public static final String SERIECRUDLIBRO = "[a-zA-ZáéíóúñüÁÉÍÓÚÑÜ\\s]{2,100}";
