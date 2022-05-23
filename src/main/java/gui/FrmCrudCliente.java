@@ -82,18 +82,18 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		lblNewLabel.setBounds(377, 10, 272, 26);
 		getContentPane().add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Nombre :");
+		JLabel lblNewLabel_1 = new JLabel("DNI :");
 		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(96, 88, 81, 13);
 		getContentPane().add(lblNewLabel_1);
 		
 		txtNOMBRE = new JTextField();
 		txtNOMBRE.addKeyListener(this);
-		txtNOMBRE.setBounds(187, 86, 255, 19);
+		txtNOMBRE.setBounds(187, 135, 255, 19);
 		getContentPane().add(txtNOMBRE);
 		txtNOMBRE.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Apellido :");
+		JLabel lblNewLabel_2 = new JLabel("Nombre :");
 		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_2.setBounds(96, 134, 81, 19);
 		getContentPane().add(lblNewLabel_2);
@@ -101,17 +101,17 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		txtAPELLIDO = new JTextField();
 		txtAPELLIDO.addKeyListener(this);
 		txtAPELLIDO.setColumns(10);
-		txtAPELLIDO.setBounds(187, 135, 255, 20);
+		txtAPELLIDO.setBounds(187, 181, 255, 20);
 		getContentPane().add(txtAPELLIDO);
 		
-		JLabel lblNewLabel_3 = new JLabel("DNI :");
+		JLabel lblNewLabel_3 = new JLabel("Apellido :");
 		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblNewLabel_3.setBounds(96, 180, 81, 19);
 		getContentPane().add(lblNewLabel_3);
 		
 		txtDNI = new JTextField();
 		txtDNI.addKeyListener(this);
-		txtDNI.setBounds(187, 181, 255, 19);
+		txtDNI.setBounds(187, 86, 255, 19);
 		getContentPane().add(txtDNI);
 		txtDNI.setColumns(10);
 		
@@ -179,7 +179,7 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Nombre", "Apellido", "DNI", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs", "Comprobante"
+				"ID", "DNI", "Nombre", "Apellido", "Tel\u00E9fono", "Direcci\u00F3n", "Pa\u00EDs", "Comprobante"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -298,8 +298,8 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 					x.getNombre(), 
 					x.getApellido(),
 					x.getDni(),
-					x.getDireccion(),
 					x.getTelefono(),
+					x.getDireccion(),
 					x.getPais(),
 					x.getComprobante()};
 			dtm.addRow(fila);
@@ -309,8 +309,8 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		String nom = txtNOMBRE.getText();
 		String ape = txtAPELLIDO.getText();
 		String dni = txtDNI.getText();
-		String dir = txtDIREC.getText();
 		String tel = txtTELEF.getText();
+		String dir = txtDIREC.getText();
 		String pai = cboPAIS.getSelectedItem().toString();
 		String com = cboCOMPROB.getSelectedItem().toString();
 
@@ -330,9 +330,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			mensaje("Seleccione el tipo de Comprobante de Pago");
 		} else {
 			Cliente cli = new Cliente();
-			cli.setDni(dni);
 			cli.setNombre(nom);
 			cli.setApellido(ape);
+			cli.setDni(dni);
 			cli.setTelefono(tel);
 			cli.setDireccion(dir);
 			cli.setPais(pai);
@@ -355,9 +355,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 	private void busca() {
 		int fila = table .getSelectedRow();
 		idSeleccionado = (Integer)table.getValueAt(fila,0);
-		 String nombre = (String)table.getValueAt(fila, 1);
-		 String apellido = (String)table.getValueAt(fila, 2);
-		 String dni = (String)table.getValueAt(fila, 3);
+		 String nombre = (String)table.getValueAt(fila, 2);
+		 String apellido = (String)table.getValueAt(fila, 3);
+		 String dni = (String)table.getValueAt(fila, 1);
 		 String telefono = (String)table.getValueAt(fila, 4);
 		 String direccion = (String)table.getValueAt(fila, 5);
 		 String pais = (String)table.getValueAt(fila, 6);
@@ -395,8 +395,8 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		String nom = txtNOMBRE.getText();
 		String ape = txtAPELLIDO.getText();
 		String dni = txtDNI.getText();
-		String dir = txtDIREC.getText();
 		String tel = txtTELEF.getText();
+		String dir = txtDIREC.getText();
 		String pai = cboPAIS.getSelectedItem().toString();
 		String com = cboCOMPROB.getSelectedItem().toString();
 		
@@ -419,9 +419,9 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 		} else {
 			Cliente cli = new Cliente();
 			cli.setIdCliente(idSeleccionado);
-			cli.setDni(dni);
 			cli.setNombre(nom);
 			cli.setApellido(ape);
+			cli.setDni(dni);
 			cli.setTelefono(tel);
 			cli.setDireccion(dir);
 			cli.setPais(pai);
@@ -429,15 +429,16 @@ public class FrmCrudCliente extends JInternalFrame implements ActionListener, Mo
 			
 
 			ClienteModel model = new ClienteModel();
-			int salida = model.registrarCliente(cli);
+			int salida = model.actualizacliente(cli);
 
 			if (salida > 0) {
 				lista();
+				idSeleccionado = -1;
 				limpiarCajasTexto();
-				mensaje("Cliente Registrado con exito");
+				mensaje("Cliente Actualizado con exito");
 
 			} else {
-				mensaje("Corriga los datos  ingresados");
+				mensaje("Error en la actualización");
 			}
 		}
 	}
