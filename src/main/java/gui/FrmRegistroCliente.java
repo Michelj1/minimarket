@@ -12,20 +12,26 @@ import javax.swing.JTextField;
 
 import entidad.Cliente;
 import model.ClienteModel;
+import util.Validaciones;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
-public class FrmRegistroCliente extends JInternalFrame {
+public class FrmRegistroCliente extends JInternalFrame implements KeyListener {
 	private JTextField txtNom;
 	private JTextField txtTelf;
 	private JTextField txtDirec;
 	private JTextField txtDni;
 	private JTextField txtApe;
 	private JComboBox cboPais;
+	private JComboBox cboComprob;
 
 	/**
 	 * Launch the application.
@@ -55,6 +61,8 @@ public class FrmRegistroCliente extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("REGISTRO CLIENTE");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBackground(Color.RED);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 25));
 		lblNewLabel.setBounds(190, 46, 263, 34);
 		getContentPane().add(lblNewLabel);
@@ -95,30 +103,38 @@ public class FrmRegistroCliente extends JInternalFrame {
 		getContentPane().add(lblNewLabel_7);
 		
 		txtNom = new JTextField();
+		txtNom.addKeyListener(this);
 		txtNom.setBounds(190, 131, 320, 19);
 		getContentPane().add(txtNom);
 		txtNom.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(190, 416, 320, 21);
-		getContentPane().add(comboBox);
+		cboComprob = new JComboBox();
+		cboComprob.addItem("Sleccinar");
+		cboComprob.addItem("Boleta");
+		cboComprob.addItem("Factura");
+		cboComprob.setBounds(190, 416, 320, 21);
+		getContentPane().add(cboComprob);
 		
 		txtTelf = new JTextField();
+		txtTelf.addKeyListener(this);
 		txtTelf.setColumns(10);
 		txtTelf.setBounds(190, 272, 320, 19);
 		getContentPane().add(txtTelf);
 		
 		txtDirec = new JTextField();
+		txtDirec.addKeyListener(this);
 		txtDirec.setColumns(10);
 		txtDirec.setBounds(190, 318, 320, 19);
 		getContentPane().add(txtDirec);
 		
 		txtDni = new JTextField();
+		txtDni.addKeyListener(this);
 		txtDni.setColumns(10);
 		txtDni.setBounds(190, 227, 320, 19);
 		getContentPane().add(txtDni);
 		
 		txtApe = new JTextField();
+		txtApe.addKeyListener(this);
 		txtApe.setColumns(10);
 		txtApe.setBounds(190, 177, 320, 19);
 		getContentPane().add(txtApe);
@@ -127,19 +143,27 @@ public class FrmRegistroCliente extends JInternalFrame {
 		cboPais.addItem("Sleccinar");
 		cboPais.addItem("Peru");
 		cboPais.addItem("Colombia");
+		cboPais.addItem("Argentina");
+		cboPais.addItem("Bolivia");
+		cboPais.addItem("Chile");
+		cboPais.addItem("Uruguay");
+		cboPais.addItem("Venezuela");
+		cboPais.addItem("Brasil");
+		cboPais.addItem("Paraguay");
+		cboPais.addItem("España");
 		cboPais.setBounds(190, 368, 320, 21);
 		getContentPane().add(cboPais);
 		
-		JButton btnNewButton = new JButton("REGISTRAR");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnREGISTRAR = new JButton("REGISTRAR");
+		btnREGISTRAR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Registrar();
 			}
 		});
-		btnNewButton.setIcon(new ImageIcon(FrmRegistroCliente.class.getResource("/iconos/Add.gif")));
-		btnNewButton.setFont(new Font("Arial", Font.BOLD, 21));
-		btnNewButton.setBounds(213, 499, 194, 55);
-		getContentPane().add(btnNewButton);
+		btnREGISTRAR.setIcon(new ImageIcon(FrmRegistroCliente.class.getResource("/iconos/Add.gif")));
+		btnREGISTRAR.setFont(new Font("Arial", Font.BOLD, 21));
+		btnREGISTRAR.setBounds(213, 499, 194, 55);
+		getContentPane().add(btnREGISTRAR);
 
 	}
 	public void mensaje(String ms) {
@@ -153,6 +177,23 @@ public class FrmRegistroCliente extends JInternalFrame {
 		String telf =txtTelf.getText();
 		String direc =txtDirec.getText();
 		String pais =cboPais.getSelectedItem().toString();
+		String comp =cboComprob.getSelectedItem().toString();
+		
+		if (!nom.matches(Validaciones.TEXTO)) {
+			mensaje("El nombre es de 2 a 20 caracteres");
+		} else if (!ape.matches(Validaciones.TEXTO)) {
+			mensaje("El apellido es de 2 a 20 caracteres");
+		} else if (!dni.matches(Validaciones.DNI)) {
+			mensaje("El DNI es de 8 digitos");
+		}else if (!telf.matches(Validaciones.TELEFONO)) {
+				mensaje("El numero de teléfono es de 9 digitos");
+		} else if (!direc.matches(Validaciones.TEXTO_NUMERO)) {
+			mensaje("La dirección es de 2 a 20 caracteres");
+		} else if (cboPais.getSelectedIndex() == 0) {
+			mensaje("Seleccione el país");
+		} else if (cboComprob.getSelectedIndex() == 0) {
+			mensaje("Seleccione el tipo de Comprobante de Pago");
+		} else {
 		
 		Cliente cli = new Cliente();
 		cli.setDni(dni);
@@ -161,20 +202,84 @@ public class FrmRegistroCliente extends JInternalFrame {
 		cli.setTelefono(telf);
 		cli.setDireccion(direc);
 		cli.setPais(pais);
+		cli.setComprobante(comp);
 		
 		ClienteModel model = new ClienteModel();
 		int salida = model.registrarCliente(cli);
 		
 		if (salida > 0) {
+			
 			mensaje("Cliente Registrado con exito");
 
 		} else {
 			mensaje("Corriga los datos  ingresados");
 		}
 		
-		
-		
+		//Vilchez
+		}
+		}
+	public void keyPressed(KeyEvent e) {
 	}
+	public void keyReleased(KeyEvent e) {
+	}
+	public void keyTyped(KeyEvent e) {
+		if (e.getSource() == txtDirec) {
+			do_txtDirec_keyTyped(e);
+		}
+		if (e.getSource() == txtTelf) {
+			do_txtTelf_keyTyped(e);
+		}
+		if (e.getSource() == txtDni) {
+			do_txtDni_keyTyped(e);
+		}
+		if (e.getSource() == txtApe) {
+			do_txtApe_keyTyped(e);
+		}
+		if (e.getSource() == txtNom) {
+			do_txtNom_keyTyped(e);
+		}
+	}
+	protected void do_txtNom_keyTyped(KeyEvent e) {
+		if (Character.isDigit(e.getKeyChar())) {
+			e.consume();
+		}
+		String nom = txtNom.getText() + e.getKeyChar();
+		if (nom.length() > 20) {
+			e.consume();
+		}
+	}
+	protected void do_txtApe_keyTyped(KeyEvent e) {
+		if (Character.isDigit(e.getKeyChar())) {
+			e.consume();
+		}
+		String ape = txtApe.getText() + e.getKeyChar();
+		if (ape.length() > 20) {
+			e.consume();
+		}
+	}
+	protected void do_txtDni_keyTyped(KeyEvent e) {
+		if (!Character.isDigit(e.getKeyChar())) {
+			e.consume();
+		}
+		String dni = txtDni.getText() + e.getKeyChar();
+		if (dni.length() > 8) {
+			e.consume();
+		}
+	}
+	protected void do_txtTelf_keyTyped(KeyEvent e) {
+		if (!Character.isDigit(e.getKeyChar())) {
+			e.consume();
+		}
+		String dni = txtTelf.getText() + e.getKeyChar();
+		if (dni.length() > 9) {
+			e.consume();
+		}
+	}
+	protected void do_txtDirec_keyTyped(KeyEvent e) {
+		String dir = txtDirec.getText() + e.getKeyChar();
+		if (dir.length() > 20) {
+			e.consume();
+		}
+	}
+ }
 	
-	
-}
