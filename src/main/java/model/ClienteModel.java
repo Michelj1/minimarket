@@ -24,7 +24,7 @@ public class ClienteModel {
 			conn = MySqlDBConexion.getConexion();
 			
 			//Se prepara el sql server
-			String sql = "insert into cliente value(?,?,?,?,?,?,?)";
+			String sql = "insert into cliente value(null,?,?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1,cli.getDni());
 			pstm.setString(2,cli.getNombre());
@@ -96,11 +96,11 @@ public class ClienteModel {
 			// PASO 1 : CREAR LA CONEXION
 			conn = MySqlDBConexion.getConexion();
 			// PASO 2 : SE PREPARA EL SQL
-			String sql = "update cliente set nombre=?,apellido=?,dni=?,telefono=?,direccion=?,pais=?,comprobante=? where idCliente=?";
+			String sql = "update cliente set dni=?,nombre=?,apellido=?,telefono=?,dirección=?,pais=?,comprobante=? where idCliente=?";
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, obj.getNombre());
-			pstm.setString(2, obj.getApellido());
-			pstm.setString(3, obj.getDni());
+			pstm.setString(1, obj.getDni());
+			pstm.setString(2, obj.getNombre());
+			pstm.setString(3, obj.getApellido());
 			pstm.setString(4, obj.getTelefono());
 			pstm.setString(5, obj.getDireccion());
 			pstm.setString(6, obj.getPais());
