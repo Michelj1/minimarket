@@ -11,7 +11,7 @@ import entidad.Cliente;
 import util.MySqlDBConexion;
 //EMANUEL
 public class ClienteModel {
-
+//emanuel
 	private static Logger Log = Logger.getLogger(ClienteModel.class.getName());
 
 	public int registrarCliente(Cliente cli) {
