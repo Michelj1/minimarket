@@ -61,7 +61,7 @@ public class FrmRegistroProveedor extends JInternalFrame implements ActionListen
 		btnRegistrar = new JButton("REGISTRAR");
 		btnRegistrar.addActionListener(this);
 		btnRegistrar.setFont(new Font("Arial", Font.BOLD, 18));
-		btnRegistrar.setIcon(new ImageIcon("C:\\Users\\user\\eclipse-workspace\\minimarket\\src\\main\\resources\\iconos\\Add.gif"));
+		btnRegistrar.setIcon(new ImageIcon(FrmRegistroProveedor.class.getResource("/iconos/Add.gif")));
 		btnRegistrar.setBounds(112, 255, 185, 38);
 		getContentPane().add(btnRegistrar);
 		
