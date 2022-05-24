@@ -2,6 +2,9 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import entidad.Proveedor;
@@ -58,5 +61,140 @@ public class ProveedorModel {
 			log.info(">>> Fin >>> insertaProveedor");
 			return salida;
 		}
+		
+		// Elimina Proveedor
+
+		public int EliminaProveedor(int idProveedor) {
+
+			int salida = -1;
+
+			Connection conn = null;
+			PreparedStatement pstm = null;
+			try {
+
+				// Se crea la conexion
+				conn = MySqlDBConexion.getConexion();
+
+				// Se prepara el sql
+
+				String sql = "delete from proveedor where idProveedor=?";
+				pstm = conn.prepareStatement(sql);
+				pstm.setInt(1, idProveedor);
+
+				log.info(">>> " + pstm);
+
+				// 3 Ejecutamos a la base de datos
+
+				salida = pstm.executeUpdate();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstm != null)
+						pstm.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e2) {
+
+				}
+			}
+
+			return salida;
+		}
+		
+		// Actualiza Proveedor
+
+		public int ActualizaProveedor(Proveedor pro) {
+
+			int salida = -1;
+
+			Connection conn = null;
+			PreparedStatement pstm = null;
+			try {
+
+				// Se crea la conexion
+				conn = MySqlDBConexion.getConexion();
+
+				// Se prepara el sql
+
+				String sql = "update proveedor set nombre=?, ruc=?, producto=?, direccion=?, correo=?, pais=?, telefono=? where idProveedor=?";
+				pstm = conn.prepareStatement(sql);
+				pstm.setString(1, pro.getNombre());
+				pstm.setString(2, pro.getRuc());
+				pstm.setString(3, pro.getProducto());
+				pstm.setString(4, pro.getDireccion());
+				pstm.setString(5, pro.getCorreo());
+				pstm.setString(6, pro.getPais());
+				pstm.setString(7, pro.getTelefono());
+				pstm.setInt(8, pro.getIdProveedor());
+
+				log.info(">>> " + pstm);
+
+				// 3 Ejecutamos a la base de datos
+				// Retorna la cantidad de registrados en salida
+				salida = pstm.executeUpdate();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (pstm != null)
+						pstm.close();
+					if (conn != null)
+						conn.close();
+				} catch (Exception e2) {
+
+				}
+			}
+
+			return salida;
+		}
+		
+		//Listar Proveedor
+		
+		public List<Proveedor> listaProveedor() {
+			ArrayList<Proveedor> salida = new ArrayList<Proveedor>();
+			
+			Connection conn= null;
+			PreparedStatement pstm= null;
+			ResultSet rs = null;
+			try {
+				//Se crea la conexcion
+				conn = MySqlDBConexion.getConexion();
+				
+				//Se prepara el sql
+				String sql = "select * from proveedor";
+				pstm = conn.prepareStatement(sql);
+				
+				rs = pstm.executeQuery();
+				Proveedor obj = null;
+				while(rs.next()) {
+					obj= new Proveedor();
+					obj.setIdProveedor(rs.getInt(1));
+					obj.setNombre(rs.getString(2));
+					obj.setRuc(rs.getString(3));
+					obj.setProducto(rs.getString(4));
+					obj.setDireccion(rs.getString(5));
+					obj.setCorreo(rs.getString(6));
+					obj.setPais(rs.getString(7));
+					obj.setTelefono(rs.getString(8));
+					salida.add(obj);
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					if (pstm!=null) 
+						pstm.close();
+					if (conn!=null) 
+						conn.close();	
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+			}
+			return salida;
+		}
+
 
 }

@@ -189,6 +189,7 @@ public class FrmRegistroProveedor extends JInternalFrame implements ActionListen
 			obj.setNombre(nom);
 			obj.setRuc(ruc);
 			obj.setProducto(prod);
+			obj.setDireccion(direc);
 			obj.setCorreo(correo);
 			obj.setPais(pais);
 			obj.setTelefono(tele);
