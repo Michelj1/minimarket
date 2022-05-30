@@ -14,16 +14,14 @@ import gui.FrmConsultaClientes;
 import gui.FrmConsultaProductos;
 import gui.FrmConsultaProveedor;
 import gui.FrmConsultaVendedor;
-import gui.FrmCrudCaja;
 import gui.FrmCrudCliente;
 import gui.FrmCrudProducto;
 import gui.FrmCrudProveedor;
-import gui.FrmCrudVendedor;
-import gui.FrmRegistroCaja;
+import gui.FrmCrudEmpleado;
 import gui.FrmRegistroCliente;
 import gui.FrmRegistroProducto;
 import gui.FrmRegistroProveedor;
-import gui.FrmRegistroVendedor;
+import gui.FrmRegistroEmpleado;
 import gui.FrmReporteBoletas;
 import gui.FrmReporteCliente;
 import gui.FrmReporteProductos;
@@ -48,13 +46,11 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 
 	private FrmRegistroCliente frmRC = new FrmRegistroCliente();
 	private FrmRegistroProveedor frmRP = new FrmRegistroProveedor();
-	private FrmRegistroVendedor frmRV = new FrmRegistroVendedor();
-	private FrmRegistroCaja frmRCJ = new FrmRegistroCaja();
+	private FrmRegistroEmpleado frmRV = new FrmRegistroEmpleado();
 	private FrmRegistroProducto frmRPR = new FrmRegistroProducto();
 	private FrmCrudCliente frmCC = new FrmCrudCliente();
 	private FrmCrudProveedor frmCP = new FrmCrudProveedor();
-	private FrmCrudVendedor frmCV = new FrmCrudVendedor();
-	private FrmCrudCaja frmCCJ = new FrmCrudCaja();
+	private FrmCrudEmpleado frmCV = new FrmCrudEmpleado();
 	private FrmCrudProducto frmCPR = new FrmCrudProducto();
 	private FrmConsultaClientes frmCCl = new FrmConsultaClientes();
 	private FrmConsultaProveedor frmCPRO = new FrmConsultaProveedor();
@@ -259,12 +255,10 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 		desktopPane.add(frmRC);
 		desktopPane.add(frmRP);
 		desktopPane.add(frmRV);
-		desktopPane.add(frmRCJ);
 		desktopPane.add(frmRPR);
 		desktopPane.add(frmCC);
 		desktopPane.add(frmCP);
 		desktopPane.add(frmCV);
-		desktopPane.add(frmCCJ);
 		desktopPane.add(frmCPR);
 		desktopPane.add(frmCCl);
 		desktopPane.add(frmCPRO);
@@ -316,9 +310,6 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 		if (e.getSource() == mntmCrudVendedor) {
 			actionPerformedMntmCrudVendedorJMenuItem(e);
 		}
-		if (e.getSource() == mntmCrudCaja) {
-			actionPerformedMntmCrudCajaJMenuItem(e);
-		}
 		if (e.getSource() == mntmCrudProveedor) {
 			actionPerformedMntmCrudProveedorJMenuItem(e);
 		}
@@ -331,9 +322,7 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 		if (e.getSource() == mntmRegistroVendedor) {
 			actionPerformedMntmRegistroVendedorJMenuItem(e);
 		}
-		if (e.getSource() == mntmRegistroCaja) {
-			actionPerformedMntmRegistroCajaJMenuItem(e);
-		}
+		
 		if (e.getSource() == mntmRegistroProveedor) {
 			actionPerformedMntmRegistroProveedorJMenuItem(e);
 		}
@@ -351,10 +340,6 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 		frmRP.setVisible(true);
 	}
 
-	protected void actionPerformedMntmRegistroCajaJMenuItem(ActionEvent e) {
-		frmRCJ.setVisible(true);
-	}
-
 	protected void actionPerformedMntmRegistroVendedorJMenuItem(ActionEvent e) {
 		frmRV.setVisible(true);
 	}
@@ -369,10 +354,6 @@ public class FrmPrincipal extends JFrame implements ActionListener {
 
 	protected void actionPerformedMntmCrudProveedorJMenuItem(ActionEvent e) {
 		frmCP.setVisible(true);
-	}
-
-	protected void actionPerformedMntmCrudCajaJMenuItem(ActionEvent e) {
-		frmCCJ.setVisible(true);
 	}
 
 	protected void actionPerformedMntmCrudVendedorJMenuItem(ActionEvent e) {
